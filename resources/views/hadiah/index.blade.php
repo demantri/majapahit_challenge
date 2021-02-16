@@ -27,8 +27,13 @@
                             <td> {{$item->desc_hadiah}} </td>
                             <td> {{$item->min_point}} </td>
                             <td style="width: 15%" class="text-center">
-                                <a href="" class="btn btn-warning btn-sm">Edit</a>
-                                <a href="" class="btn btn-danger btn-sm">Delete</a>
+                                <a href="{{ url('hadiah/'.$item->id. '/edit') }}" class="btn btn-warning btn-sm">Edit</a>
+                                {{-- <form action="/hadiah/{{$id}}" method="post" class="d-inline">
+                                    @method('delete')
+                                    @csrf
+                                    <button class="btn btn-danger btn-sm">Delete</button>
+                                </form> --}}
+                                <a href="/hadiah/delete/{{$item->id}}" onclick="return confirm('Delete data?')" class="btn btn-danger btn-sm">Delete</a>
                             </td>
                         </tr>
                         @endforeach

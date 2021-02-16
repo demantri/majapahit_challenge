@@ -6,6 +6,7 @@
     <div class="card">
 
         <form action="/hadiah/save" method="POST">
+            @csrf
             <div class="card-body">
                 
                 <div class="form-group row">
