@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 15, 2021 at 10:37 AM
+-- Generation Time: Feb 17, 2021 at 01:58 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.3.17
 
@@ -25,6 +25,78 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `barangs`
+--
+
+CREATE TABLE `barangs` (
+  `id` int(11) NOT NULL,
+  `nama_barang` varchar(233) NOT NULL,
+  `harga_barang` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `barangs`
+--
+
+INSERT INTO `barangs` (`id`, `nama_barang`, `harga_barang`) VALUES
+(1, 'Susu beruang cewek', 12500),
+(2, 'Susu indomilk', 15500),
+(3, 'Gelas cantique', 13499),
+(4, 'Case handphone', 25000);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customers`
+--
+
+CREATE TABLE `customers` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `alamat` varchar(255) NOT NULL,
+  `no_telp` varchar(12) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `customers`
+--
+
+INSERT INTO `customers` (`id`, `nama`, `alamat`, `no_telp`) VALUES
+(1, 'Dede sumantri', 'Bekasi', '087877472553'),
+(2, 'Mutiara sari', 'Bekasi, Jl lele 5', '08989898999');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `detail_pembelians`
+--
+
+CREATE TABLE `detail_pembelians` (
+  `id` int(11) NOT NULL,
+  `id_pembelian` varchar(255) NOT NULL,
+  `id_customer` int(11) NOT NULL,
+  `id_barang` int(11) NOT NULL,
+  `harga` int(11) NOT NULL,
+  `jumlah` int(11) NOT NULL,
+  `subtotal` int(11) NOT NULL,
+  `tgl_transaksi` date NOT NULL,
+  `point` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `detail_pembelians`
+--
+
+INSERT INTO `detail_pembelians` (`id`, `id_pembelian`, `id_customer`, `id_barang`, `harga`, `jumlah`, `subtotal`, `tgl_transaksi`, `point`) VALUES
+(1, 'PMB-20210217000001', 1, 4, 25000, 1, 25000, '2021-02-17', 5),
+(2, 'PMB-20210217000002', 1, 3, 13499, 1, 13499, '2021-02-17', 5),
+(3, 'PMB-20210217000003', 2, 1, 12500, 1, 12500, '2021-02-17', 5),
+(4, 'PMB-20210217000004', 1, 1, 12500, 1, 12500, '2021-02-17', 5),
+(5, 'PMB-20210217000005', 2, 2, 15500, 2, 31000, '2021-02-17', 5);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `failed_jobs`
 --
 
@@ -41,21 +113,23 @@ CREATE TABLE `failed_jobs` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `hadiah`
+-- Table structure for table `hadiahs`
 --
 
-CREATE TABLE `hadiah` (
+CREATE TABLE `hadiahs` (
   `id` int(11) NOT NULL,
-  `desc_hadiah` varchar(255) NOT NULL,
+  `desc_hadiah` varchar(233) NOT NULL,
   `min_point` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `hadiah`
+-- Dumping data for table `hadiahs`
 --
 
-INSERT INTO `hadiah` (`id`, `desc_hadiah`, `min_point`) VALUES
-(1, 'Kopi susu', 15);
+INSERT INTO `hadiahs` (`id`, `desc_hadiah`, `min_point`) VALUES
+(1, 'Voucher makan warteg bahari', 10),
+(2, 'Susu beruang', 5),
+(3, 'testing api', 25);
 
 -- --------------------------------------------------------
 
@@ -93,6 +167,30 @@ CREATE TABLE `password_resets` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `pembelians`
+--
+
+CREATE TABLE `pembelians` (
+  `id_pembelian` int(11) NOT NULL,
+  `tanggal_transaksi` date NOT NULL,
+  `total` int(11) NOT NULL,
+  `status` varchar(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `points`
+--
+
+CREATE TABLE `points` (
+  `id` int(11) NOT NULL,
+  `point` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -112,6 +210,24 @@ CREATE TABLE `users` (
 --
 
 --
+-- Indexes for table `barangs`
+--
+ALTER TABLE `barangs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `customers`
+--
+ALTER TABLE `customers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `detail_pembelians`
+--
+ALTER TABLE `detail_pembelians`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
@@ -119,9 +235,9 @@ ALTER TABLE `failed_jobs`
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
 
 --
--- Indexes for table `hadiah`
+-- Indexes for table `hadiahs`
 --
-ALTER TABLE `hadiah`
+ALTER TABLE `hadiahs`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -137,6 +253,18 @@ ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
 
 --
+-- Indexes for table `pembelians`
+--
+ALTER TABLE `pembelians`
+  ADD PRIMARY KEY (`id_pembelian`);
+
+--
+-- Indexes for table `points`
+--
+ALTER TABLE `points`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -148,22 +276,52 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `barangs`
+--
+ALTER TABLE `barangs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `customers`
+--
+ALTER TABLE `customers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `detail_pembelians`
+--
+ALTER TABLE `detail_pembelians`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `hadiah`
+-- AUTO_INCREMENT for table `hadiahs`
 --
-ALTER TABLE `hadiah`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `hadiahs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `pembelians`
+--
+ALTER TABLE `pembelians`
+  MODIFY `id_pembelian` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `points`
+--
+ALTER TABLE `points`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
