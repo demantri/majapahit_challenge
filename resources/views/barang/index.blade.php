@@ -1,11 +1,12 @@
 @extends('layout.v_template')
-@section('title', 'Tampilan Customer')
+@section('title', 'Tampilan Barang')
+@section('tab_name', 'Barang')
 
 @section('content')
 
     <div class="card">
         <div class="card-header">
-            <a href="/customer/add" class="btn btn-sm btn-success">+ Tambah Data</a>
+            <a href="/barang/add" class="btn btn-sm btn-success">+ Tambah Data</a>
         </div>
 
         <div class="card-body">
@@ -15,10 +16,8 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Nama</th>
-                            <th>Alamat</th>
-                            <th>No Telfon</th>
-                            <th>Total Point</th>
+                            <th>Nama Barang</th>
+                            <th>Harga Satuan</th>
                             <th class="text-center">Action</th>
                         </tr>
                     </thead>
@@ -26,16 +25,14 @@
                         @php
                             $no = 1;
                         @endphp
-                        @foreach ($customer as $item)
+                        @foreach ($barang as $item)
                         <tr>
                             <td> {{$no++}} </td>
-                            <td> {{$item->nama}} </td>
-                            <td> {{$item->alamat}} </td>
-                            <td> {{$item->no_telp}} </td>
-                            <td> {{$item->total}} </td>
+                            <td> {{$item->nama_barang}} </td>
+                            <td> {{$item->harga_barang}} </td>
                             <td style="width: 15%" class="text-center">
-                                <a href="{{ url('customer/'.$item->id. '/edit') }}" class="btn btn-warning btn-sm">Edit</a>
-                                <a href="/customer/delete/{{$item->id}}" onclick="return confirm('Delete data?')" class="btn btn-danger btn-sm">Delete</a>
+                                <a href="{{ url('barang/'.$item->id. '/edit') }}" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="/barang/delete/{{$item->id}}" onclick="return confirm('Delete data?')" class="btn btn-danger btn-sm">Delete</a>
                             </td>
                         </tr>
                         @endforeach

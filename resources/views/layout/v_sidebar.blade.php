@@ -19,29 +19,35 @@
             </a>
             <ul class="nav nav-treeview">
                 <li class="nav-item">
+                    <a href="/barang" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Barang</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="/customer" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Customer</p>
                     </a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="/point" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Point</p>
                     </a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <a href="/hadiah" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Hadiah</p>
                     </a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="/user" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>User</p>
                     </a>
-                </li>
+                </li> --}}
             </ul>
         </li>
 
@@ -60,12 +66,13 @@
                         <p>Pembelian</p>
                     </a>
                 </li>
-                <li class="nav-item">
+                {{-- soon buat latihan lagi --}}
+                {{-- <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Penjualan</p>
                     </a>
-                </li>
+                </li> --}}
             </ul>
         </li>
 

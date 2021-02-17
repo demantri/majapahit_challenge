@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\barang;
+use App\Models\detail_pembelian;
 use App\Models\HomeModel;
 use App\Models\hadiah;
 use App\Models\customer;
@@ -14,6 +16,12 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->Home_model = new HomeModel();
+    }
+
+    public function home()
+    {
+        # code...
+        return view('home.index');
     }
 
     public function index_hadiah()
@@ -67,9 +75,10 @@ class HomeController extends Controller
     // customer masterdata
     public function customer()
     {
-        $customer = customer::select('*')
-                    ->from('customers')
-                    ->get();
+        // $customer = customer::select('*')
+        //             ->from('customers')
+        //             ->get();
+        $customer = $this->Home_model->detail_cust();
         // dd($customer);
         return view('customer.index', compact('customer'));
     }
@@ -115,53 +124,117 @@ class HomeController extends Controller
     }
 
     // point masterdata
-    public function point()
+    public function barang()
     {
-        $point = point::select('*')
-                    ->from('points')
+        $barang = barang::select('*')
+                    ->from('barangs')
                     ->get();
         // dd($customer);
-        return view('point.index', compact('point'));
+        return view('barang.index', compact('barang'));
     }
 
-    public function point_form()
+    public function barang_form ()
     {
-        return view('point.form');
+        return view('barang.form');
     }
 
-    public function point_save(Request $request)
-    {
-        # code...
-        point::create($request->all());
-        return redirect('/point');
-    }
-
-    public function point_form_edit($id)
+    public function barang_save(Request $request)
     {
         # code...
-        $detail = point::where('id', $id)->first();
-        return view('point.form_edit', compact('detail'));
+        barang::create($request->all());
+        return redirect('/barang');
     }
 
-    public function point_update(Request $request, $id)
+    public function barang_form_edit($id)
     {
         # code...
-        point::where('id', $id)
+        $detail = barang::where('id', $id)->first();
+        return view('barang.form_edit', compact('detail'));
+    }
+
+    public function barang_update(Request $request, $id)
+    {
+        # code...
+        barang::where('id', $id)
         ->update([
-            // 'id'            => $request->id,
-            // 'nama'            => $request->nama,
-            // 'alamat'   => $request->alamat,
-            // 'no_telp'     => $request->no_telp,
+            'id'            => $request->id,
+            'nama_barang'            => $request->nama_barang,
+            'harga_barang'   => $request->harga_barang,
         ]);
-        return redirect('/point');
+        return redirect('/barang');
     }
 
-    public function point_delete($id)
+    public function barang_delete($id)
     {
         # code...
-        point::where('id', $id)
+        barang::where('id', $id)
         ->delete();
-        return redirect('/point');
+        return redirect('/barang');
     }
+
+    public function pembelian()
+    {
+        $data = $this->Home_model->detail_pemb();
+        return view('pembelian.index', compact('data'));
+    }
+
+    public function pembelian_form()
+    {
+
+        $id_pembelian = $this->Home_model->id_pembelian();
+        // dd($id_pembelian);
+        $customer = customer::select('*')->from('customers')->get();
+        $barang = barang::select('*')->from('barangs')->get();
+
+        return view('pembelian.form', compact('customer', 'barang', 'id_pembelian'));
+    }
+
+    public function pembelian_save(Request $request)
+    {
+        # code...
+        detail_pembelian::create($request->all());
+        return redirect('/pembelian');
+    }
+
+    public function getHarga($id_barang)
+    {
+        # code...
+        $barang = barang::where('id', $id_barang)->get();
+        return $barang;
+    }
+
+    public function last_point($id_customer)
+    {
+        $customer = customer::where('id', $id_customer)->get();
+        return $customer;
+    }
+
+    // public function point_form_edit($id)
+    // {
+    //     # code...
+    //     $detail = point::where('id', $id)->first();
+    //     return view('point.form_edit', compact('detail'));
+    // }
+
+    // public function pembelian_update(Request $request, $id)
+    // {
+    //     # code...
+    //     point::where('id', $id)
+    //     ->update([
+    //         // 'id'            => $request->id,
+    //         // 'nama'            => $request->nama,
+    //         // 'alamat'   => $request->alamat,
+    //         // 'no_telp'     => $request->no_telp,
+    //     ]);
+    //     return redirect('/point');
+    // }
+
+    // public function point_delete($id)
+    // {
+    //     # code...
+    //     point::where('id', $id)
+    //     ->delete();
+    //     return redirect('/point');
+    // }
 
 }

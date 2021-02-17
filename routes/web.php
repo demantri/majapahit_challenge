@@ -14,12 +14,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('layout.v_template');
-});
+// Route::get('/', function () {
+//     return view('layout.v_template');
+// });
 
+// Route::view('/', [HomeController::class, 'home']);
 // Route::view('/hadiah', 'hadiah.index');
 Route::view('/user', 'user.index');
+// Route::view('/', 'home.index');
+
+Route::get('/', [HomeController::class, 'home']);
+
 
 // hadiah
 Route::get('/hadiah', [HomeController::class, 'index_hadiah']);
@@ -37,11 +42,23 @@ Route::get('/customer/{id}/edit', [HomeController::class, 'customer_form_edit'])
 Route::post('/customer/{id}', [HomeController::class, 'customer_update']);
 Route::get('/customer/delete/{id}', [HomeController::class, 'customer_delete']);
 
-// point
-Route::get('/point', [HomeController::class, 'point']);
-Route::get('/point/add', [HomeController::class, 'point_form']);
-Route::post('/point/save', [HomeController::class, 'point_save']);
-Route::get('/point/{id}/edit', [HomeController::class, 'point_form_edit']);
-Route::post('/point/{id}', [HomeController::class, 'point_update']);
-Route::get('/point/delete/{id}', [HomeController::class, 'point_delete']);
+// barang
+Route::get('/barang', [HomeController::class, 'barang']);
+Route::get('/barang/add', [HomeController::class, 'barang_form']);
+Route::post('/barang/save', [HomeController::class, 'barang_save']);
+Route::get('/barang/{id}/edit', [HomeController::class, 'barang_form_edit']);
+Route::post('/barang/{id}', [HomeController::class, 'barang_update']);
+Route::get('/barang/delete/{id}', [HomeController::class, 'barang_delete']);
+
+// pembelian
+Route::get('/pembelian', [HomeController::class, 'pembelian']);
+Route::get('/pembelian/add', [HomeController::class, 'pembelian_form']);
+// Route::post('/pembelian/save', [HomeController::class, 'pembelian_save_detail']);
+Route::post('/pembelian/save', [HomeController::class, 'pembelian_save']);
+// Route::get('/pembelian/{id}/edit', [HomeController::class, 'pembelian_form_edit']);
+// Route::post('/pembelian/{id}', [HomeController::class, 'pembelian_update']);
+// Route::get('/pembelian/delete/{id}', [HomeController::class, 'pembelian_delete']);
+Route::get('/pembelian/details/{id}', [HomeController::class, 'getHarga']);
+Route::get('/pembelian/last_point/{id}', [HomeController::class, 'last_point']);
+
 
